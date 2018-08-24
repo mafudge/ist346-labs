@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  webapp:
+    build: webapp/.
+    ports:
+      - 8080
+#    environment:
+#      - SERVICE_PORTS=8080
+#    scale: 1
+#    networks:
+#      - front-tier
+#      - back-tier
+
+  proxy:
+    image: dockercloud/haproxy
+    links:
+      - webapp
+    environment:
+      - BALANCE=roundrobin
+    volumes:
+      - ./docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+      - 1936:1936
+
+
+#    networks:
+#      - front-tier
+#      - back-tier
+
+#networks:
+#  front-tier:
+#    driver: bridge
+#  back-tier:
+#    driver: bridge
