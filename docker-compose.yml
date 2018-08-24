@@ -1,9 +1,0 @@
-version: '2'
-services:
-  ubuntu:
-    image: ist346/ubuntu
-    command: /bin/bash 
-    hostname: ubuntu
-
-
-    
