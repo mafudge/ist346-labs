@@ -2,30 +2,30 @@ version: '3'
 services:
   server:
     image: "ist346/lab01-server:latest"
-    container_name: lab01_server
+    container_name: labC_server
     hostname: server
     privileged: true
     #stdin_open: true
     #tty: true
     networks: 
-      - lab01
+      - labC
     ports:
       - "22:22" # SSH
       - "80:80"
     # entrypoint: /usr/bin/docker-quickstart
   workstation:
     image: "ist346/ubuntu-16.04-base:latest"
-    container_name: lab01_workstation
+    container_name: labC_workstation
     hostname: workstation
     privileged: true
     stdin_open: true
     tty: true
     networks: 
-      - lab01
+      - labC
     entrypoint: /bin/bash
     
 networks:
-  lab01:
+  labC:
     driver: bridge
     #enable_ipv6: true 
     ipam:
