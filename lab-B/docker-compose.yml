@@ -1,0 +1,17 @@
+version: '3'
+services:
+  linux:
+    image: "ist346/lab-b-workstation"
+    container_name: lab_b_linux
+    hostname: localhost
+    privileged: true
+    stdin_open: true
+    tty: true
+    networks: 
+      - lab_b
+    #entrypoint: /bin/bash
+    
+networks:
+  lab_b:
+    driver: bridge
+    #enable_ipv6: true 
