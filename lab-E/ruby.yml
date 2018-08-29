@@ -1,9 +1,14 @@
 - hosts: it
   tasks:
-    - name : Install Ruby
+    - name: Install Ruby
       apt:
         name : ruby
         state: present
         update_cache: yes
-    - name: Hello From Ruby
-      shell: "ruby -e 'puts \"hello from ruby\"'" 
+    - name: Run The Ruby Program
+      shell: "ruby -e 'puts \"hello from ruby\"'"
+    - name: Uninstall Ruby
+      apt:
+        name: ruby
+        state: absent
+        update_cache: yes
