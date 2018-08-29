@@ -1,0 +1,9 @@
+- hosts: it
+  tasks:
+    - name : Install Ruby
+      apt:
+        name : ruby
+        state: present
+        update_cache: yes
+    - name: Hello From Ruby
+      shell: "ruby -e 'puts \"hello from ruby\"'" 
