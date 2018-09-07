@@ -8,7 +8,7 @@ services:
     #stdin_open: true
     #tty: true
     volumes:
-      - ./html/:/var/www/html/:rw
+      - ./2-tier/html/:/var/www/html/:rw
     networks: 
       - labF
     ports:
