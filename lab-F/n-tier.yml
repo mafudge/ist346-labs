@@ -1,38 +1,51 @@
-version: '3'
+version: '3.1'
 
 services:
-  db:
-    image: mysql:latest
-    volumes:
-      - ./db:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=SU2orange
-      - MYSQL_DATABASE=django
-      - MYSQL_USER=django_user
-      - MYSQL_PASSWORD=SimplePassword
+
+
   nginx:
-    image: nginx:alpine
-    volumes:
-      - ./n-tier//nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./n-tier/nginx/conf:/etc/nginx/conf.d
-      - django_admin_static:/django_admin_static
+#    image: jwilder/nginx-proxy
+    build: ./n-tier/nginx/.
+    restart: always
     ports:
       - "80:80"
-    depends_on:
-      - web
-  web:
-    build: ./n-tier/.
-    command: uwsgi --ini uwsgi.ini
-    working_dir: /code/web
-    volumes:
-      - ./n-tier:/code
-      - django_admin_static:/usr/local/lib/python3.6/site-packages/django/contrib/admin/static
+    links: 
+      - wordpress 
+    networks: 
+      labF:
+        ipv4_address: 172.44.1.101
+
+  wordpress:
+    image: wordpress
+    hostname: wordpress
+    restart: always
+    links:
+      - mysql
     ports:
-      - "8000:8000"
-    depends_on:
-      - db
-volumes:
-  django_admin_static:
+      - 8080:80
+    networks: 
+      labF:
+        ipv4_address: 172.44.1.102
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports: 
+      - 3306:3306
+    networks: 
+      labF:
+        ipv4_address: 172.44.1.103
+
+networks:
+  labF:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.1.0/24
