@@ -1,0 +1,69 @@
+DOCKERFILE MKDOCS ////////////////////////
+FROM gliderlabs/alpine:3.2
+
+RUN apk add --update python3 py-pip && pip3 install mkdocs && rm -rf /var/cache/apk/*
+
+WORKDIR /docs
+
+VOLUME /docs
+EXPOSE 8000
+
+ENTRYPOINT ["mkdocs serve"]
+
+DOCKER-COMPOSE MKDOCS ////////////////////
+mkdocs:
+   build: .
+   restart: always
+   ports:
+      - 8006:8000
+   volumes:
+      - '/home/ubuntu/docker/mkdocs/docs:/docs'
+   entrypoint: 'mkdocs serve -a 0.0.0.0:8000'
+
+
+NGINX //////////////////////////////////////
+
+server {
+
+    listen      80;
+    listen      443           ssl http2;
+    listen [::]:80;
+    listen [::]:443           ssl http2;
+
+    client_max_body_size        10M;
+    add_header                Strict-Transport-Security "max-age=31536000" always;
+
+    server_name drone drone.do.apphammer.co;
+
+    # https
+    ssl                       on;
+    ssl_session_cache         shared:SSL:20m;
+    ssl_session_timeout       10m;
+    ssl_protocols             TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers               "ECDH+AESGCM:ECDH+AES256:ECDH+AES128:!ADH:!AECDH:!MD5;";
+    ssl_stapling              on;
+    ssl_stapling_verify       on;
+    ssl_certificate           /etc/letsencrypt/live/apphammer.co/fullchain.pem;
+    ssl_certificate_key       /etc/letsencrypt/live/apphammer.co/privkey.pem;
+    ssl_trusted_certificate   /etc/letsencrypt/live/apphammer.co/chain.pem;
+
+
+    root /var/dockerapps/drone;
+    access_log /var/dockerapps/drone/logs/access.log;
+    error_log /var/dockerapps/drone/logs/error.log;
+
+    location ^~ /.well-known {
+        allow all;
+        root  /data/letsencrypt/;
+    }
+
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://drone;
+    }
+}
