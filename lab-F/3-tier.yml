@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  nginx3:
+#    image: jwilder/nginx-proxy
+    build: ./3-tier/nginx/.
+    restart: always
+    ports:
+      - "80:80"
+    links: 
+      - mkdocs 
+    networks: 
+      labF:
+        ipv4_address: 172.44.1.101
+
+  mkdocs:
+    build: ./3-tier/mkdocs/.
+    restart: always
+    hostname: mkdocs
+    ports:
+      - 8000:8000
+    volumes:
+      - './3-tier/docs:/docs'
+    entrypoint: 'mkdocs serve -a 0.0.0.0:8000'
+    networks: 
+      labF:
+        ipv4_address: 172.44.1.102
+
+networks:
+  labF:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.1.0/24
