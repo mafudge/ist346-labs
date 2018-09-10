@@ -1,7 +1,8 @@
-# This is a Website
+# Fudgemart.com
 
-This is a test.
+Welcome to the fudgemart.com website. We sell:
 
-- From
-- The 
-- Website
+- Clothing
+- Electronics
+- Hardware
+- Housewares

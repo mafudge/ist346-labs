@@ -2,8 +2,7 @@ version: '3.1'
 
 services:
 
-
-  nginx:
+  nginxn:
 #    image: jwilder/nginx-proxy
     build: ./n-tier/nginx/.
     restart: always
@@ -16,7 +15,7 @@ services:
         ipv4_address: 172.44.1.101
 
   wordpress:
-    image: wordpress
+    image: wordpress # ist346/lab_f_wordpress:latest
     hostname: wordpress
     restart: always
     links:
@@ -30,7 +29,7 @@ services:
       WORDPRESS_DB_PASSWORD: example
 
   mysql:
-    image: mysql:5.7
+    image: mysql:5.7 # ist346/lab_f_mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example

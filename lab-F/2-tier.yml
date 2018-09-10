@@ -1,8 +1,7 @@
 version: '3'
 services:
-  nginx:
+  nginx2:
     image: "ist346/lab01-server:latest"
-    container_name: nginx_webserver
     hostname: webserver
     privileged: true
     #stdin_open: true

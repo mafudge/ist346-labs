@@ -1,4 +1,5 @@
-site_name: Sample Website
-
+site_name: Fudgemart.com
+theme: 
+   name: material
 pages:
     - 'Home': 'index.md'
