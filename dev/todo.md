@@ -1,5 +1,7 @@
+# Todo
+
 | Status | Lab | Lesson | Gist Of It |
-|-----|-----|------|-----|-----|
+| ----- | ----- | ------ | ----- | ----- |
 | done | A - Understanding the lab environment | 03 | git commands, docker compose, basics of every lab |
 | done | B - Command Line Linux | 04 | learn basic linux commands |
 | done  | C - Networking Fundamentals | 05 | basic networking fundamental in PowerShell and linux |
