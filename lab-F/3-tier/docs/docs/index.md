@@ -6,4 +6,3 @@ Welcome to the fudgemart.com website. We sell:
 - Electronics
 - Hardware
 - Housewares
-- Sporting Goods

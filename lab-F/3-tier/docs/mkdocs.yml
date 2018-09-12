@@ -1,5 +1,5 @@
 site_name: Fudgemart.com
 theme: 
-   name: material
+   name: mkdocs
 pages:
     - 'Home': 'index.md'
