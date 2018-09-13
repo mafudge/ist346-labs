@@ -17,8 +17,8 @@ services:
       - webapp
     environment:
 #      - BALANCE=roundrobin
-      - BALANCE=leastconn
-#      - BALANCE=uri
+#      - BALANCE=leastconn
+      - BALANCE=uri
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
