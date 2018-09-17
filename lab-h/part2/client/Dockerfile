@@ -3,9 +3,9 @@ FROM ist346/ubuntu-16.04-base:latest
 RUN apt-get -y update
 
 # Install requirements, cifs utils allows us to mount the folder
-RUN apt-get install -y smbclient nano cifs-utils libnss-ldap openssh-server
+RUN apt-get install -y smbclient nano cifs-utils openssh-server
 
-RUN dpkg-reconfigure ldap-auth-config
+# RUN dpkg-reconfigure ldap-auth-config
 
 RUN echo 'root:IST346' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -17,8 +17,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 
-# Install Stuff
-RUN apt-get update && apt-get install -y openssh-server nginx 
 RUN mkdir -p /var/run/sshd
 
 # Build Script, expose ports, run!
