@@ -1,0 +1,27 @@
+version: "2.2"
+
+services:
+  ldap:
+    # https://github.com/osixia/docker-openldap
+    image: osixia/openldap:1.2.2
+    environment:
+      - LDAP_ORGANISATION="My Company"
+      - LDAP_ADMIN_PASSWORD="JonSn0w"
+      - LDAP_DOMAIN="my-company.com"
+
+  server:
+    build: server/.
+    links:
+      - ldap
+    depends_on:
+      - ldap
+    
+  
+  client:
+    build: client/.
+    privileged: true # Need to add privileged mode so mount works!
+    links:
+      - server
+      - ldap
+    depends_on:
+      - server
