@@ -13,9 +13,9 @@ services:
     build: server/.
     links:
       - ldap
-    depends_on:
-      - ldap
-    
+    volumes:
+      - ./smb.conf:/etc/samba/smb.conf
+      - ./libnss-ldap.conf:/etc/libnss-ldap.conf
   
   client:
     build: client/.
@@ -23,5 +23,3 @@ services:
     links:
       - server
       - ldap
-    depends_on:
-      - server
