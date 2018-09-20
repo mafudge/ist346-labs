@@ -6,8 +6,6 @@ Network File Systems and access control
 
 Simple SMB server using Samba. Access control will be controlled by simple Samba users and PAM.
 
-### Setup
-
 #### Goals
 
 1. Setup a Simple Samba Server
@@ -274,20 +272,57 @@ my new file
 - Navigate to directory, add a file and some text
 - Show on server that file is there
 
-## SMB with LDAP
+## Part 2: Samba with LDAP
 
-Creating and SMB server utilizing LDAP for access control, Use prebuild samba control
+In the next part we will use an ldap server to control authentication of users and control the authorization fo mounts. Much of this is already done for you.
 
-### Setup
+https://www.techrepublic.com/article/how-to-populate-an-ldap-server-with-users-and-groups-via-phpldapadmin/
+
+### Walkthrough
+
+Lets get started. Navigate to the part2 folder and start the environment
+
+```
+$ docker-compose up -d
+```
+
+This will create 4 containers. The LDAP server, the phpLDAPadmin web interface, the Samba server, and the client we will use to connect to the server.
+
+Once all of the containers start you should be able to navigate to the web interface at [http://localhost:9080](http://localhost:9080) in your browser.
+
+![phpldapadmin](assets/phpldapadmin.png)
+
+To login to the interface click **login** on the left. You can login with the following credentials
+
+```
+Login DN: cn=admin,dc=example,dc=org
+Password: admin
+```
+
+Once Logged in you will see the following screen.
+
+![Start](assets/startscreen.png)
+
+Before we can start using samba we need to add a few things to our ldap directory.
+
 
 Start LDAP Server
 Configure SMB Server for ldap
 
 Log into client with proper user
 
-## Cloud Storage with Minio (Self Hosted S3)
+## Part 3: Cloud Storage with Minio (Self Hosted S3)
 
-Minio Server and Bucket policies
+In this part we will utilize cloud storage provided by Mino. Minio is a self hosted S3 compatable object storage. S3 is a very popular storage system used worldwide. This lab demonstrates how S3 protects files utilizing bucket policies and CORS.
+
+#### Goals
+
+1. Run a Simple Minio server
+2. Interact with the server utilizing the minio client.
+3. Demonstrate simple bucket policies and setting the with the client.
+4. Interact with Minio through the user interface.
+
+docker run -it --entrypoint=/bin/sh minio/mc
 
 ## Setup
 
