@@ -1,0 +1,25 @@
+version: '3'
+services:
+  nginx2:
+    image: "ist346/lab01-server:latest"
+    hostname: webserver
+    privileged: true
+    #stdin_open: true
+    #tty: true
+    volumes:
+      - ./2-tier/html/:/var/www/html/:rw
+    networks: 
+      - labF
+    ports:
+#      - "22:22" # SSH
+      - "80:80"
+    
+networks:
+  labF:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.1.0/24

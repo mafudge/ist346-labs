@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {% if auto %}
+        <meta http-equiv="refresh" content="3" >
+        {% endif %}
+    </head>
+    <body>
+        <div class="container">
+        <h1>Sample Web Application</h1>
+        <p>We are all the same application, but here are my specifics:</p>
+        <ul>
+            <li>HOSTNAME: <b>{{ host }}</b>
+            <li>IP Address: <b>{{ ip }}</b>
+            <li>Current Date/Time: <b>{{ now }}</b>
+        </ul>
+    </div>
+    </body>
+</html>

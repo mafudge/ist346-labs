@@ -1,0 +1,5 @@
+site_name: Fudgemart.com
+theme: 
+   name: mkdocs
+pages:
+    - 'Home': 'index.md'
