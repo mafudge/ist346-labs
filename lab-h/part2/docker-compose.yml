@@ -33,5 +33,7 @@ services:
      - ./shares:/mnt/homes
 
   client:
-    image: ubuntu
-    entrypoint: ["tail", "-f", "/dev/null"]
+    build: ./client
+    privileged: true # Need to add privileged mode so mount 
+    links:
+      - smbserver

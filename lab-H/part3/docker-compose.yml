@@ -3,6 +3,7 @@ version: "3"
 services:
   minio:
     image: minio/minio
+    network_mode: bridge
     volumes:
       - ./data:/data
     ports:
@@ -10,4 +11,4 @@ services:
     environment:
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio123
-      command: server /data
+    command: "server /data"
