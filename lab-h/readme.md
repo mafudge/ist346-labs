@@ -305,6 +305,8 @@ Once Logged in you will see the following screen.
 
 Before we can start using samba we need to add a few things to our ldap directory.
 
+To get started Samba needs a Samba posix group. 
+
 
 Start LDAP Server
 Configure SMB Server for ldap
