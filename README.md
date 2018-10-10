@@ -1,6 +1,6 @@
 # ist346-labs
 
-This repository contains the labs for IST346:  Information Technology Management & Administration course offered by the iSchool at Syraucse University. 
+This repository contains the labs for IST346:  Information Technology Management & Administration course offered by the iSchool at Syraucse University.
 
 ## What do I need to run these labs? 
 
