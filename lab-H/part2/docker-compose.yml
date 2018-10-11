@@ -24,6 +24,7 @@ services:
     image: andrespp/samba-ldap
     environment:
      - SAMBA_LDAP_PASSWORD=admin
+    hostname: smbserver
     links:
      - ldap-host
     ports:
@@ -35,6 +36,7 @@ services:
 
   client:
     build: ./client
+    hostname: client
     privileged: true # Need to add privileged mode so mount 
     links:
       - smbserver

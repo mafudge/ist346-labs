@@ -3,10 +3,12 @@ version: "2.2"
 services:
   server:
     build: server/.
+    hostname: server
   
   client:
     build: client/.
     privileged: true # Need to add privileged mode so mount works!!!
+    hostname: client
     links:
       - server
     depends_on:

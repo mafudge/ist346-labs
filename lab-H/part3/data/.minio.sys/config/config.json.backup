@@ -1,5 +1,5 @@
 {
-	"version": "30",
+	"version": "29",
 	"credential": {
 		"accessKey": "minio",
 		"secretKey": "minio123"
@@ -161,16 +161,7 @@
 	},
 	"compress": {
 		"enabled": false,
-		"extensions": [
-			".txt",
-			".log",
-			".csv",
-			".json"
-		],
-		"mime-types": [
-			"text/csv",
-			"text/plain",
-			"application/json"
-		]
+		"extensions": null,
+		"mime-types": null
 	}
 }
