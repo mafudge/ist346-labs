@@ -3,6 +3,7 @@ FROM ubuntu:16.04
 RUN apt-get -y update
 RUN apt-get install -y samba nano
 
+# Comments
 # RUN useradd ist-t-user --shell /bin/false
 
 # RUN (echo "password"; sleep 1; echo "password" ) | smbpasswd -a ist-t-user

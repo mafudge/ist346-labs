@@ -2,6 +2,7 @@ FROM ubuntu:16.04
 
 RUN apt-get -y update
 
+# comments
 # Install requirements, cifs utils allows us to mount the folder
 RUN apt-get install -y smbclient nano cifs-utils
 

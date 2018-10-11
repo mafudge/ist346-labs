@@ -6,7 +6,7 @@ services:
   
   client:
     build: client/.
-    privileged: true # Need to add privileged mode so mount works!
+    privileged: true # Need to add privileged mode so mount works!!!
     links:
       - server
     depends_on:
