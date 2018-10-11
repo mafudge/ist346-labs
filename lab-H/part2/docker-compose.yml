@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+  ldap-host:
+    # openldap
+    # https://github.com/osixia/docker-openldap
+    # un: cn=admin,dc=example,dc=org
+    # pw: admin
+    image: osixia/openldap:1.2.2
+    environment:
+      - LDAP_TLS=false
+    
+  ldap-ui:
+    image: osixia/phpldapadmin:0.7.2
+    links:
+      - ldap-host
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
+      - PHPLDAPADMIN_HTTPS=false
+    ports:
+      - 9080:80
+
+  smbserver:
+    image: andrespp/samba-ldap
+    environment:
+     - SAMBA_LDAP_PASSWORD=admin
+    links:
+     - ldap-host
+    ports:
+     - "8445:445"
+    volumes:
+     - ./libnss-ldap.conf:/etc/libnss-ldap.conf:ro
+     - ./smb.conf:/etc/samba/smb.conf:ro
+     - ./shares:/mnt/homes
+
+  client:
+    build: ./client
+    privileged: true # Need to add privileged mode so mount 
+    links:
+      - smbserver
