@@ -7,7 +7,7 @@ Cloud Computing, Using 3rd party services for web application authentication. Wo
 - Install third party authentication plugin for Drupal. 
 - Once plugin is installed and working create a new docker images with the changes to software
 - Push new image to docker registry
-- deploy new image to a cloud environment running on kubernetes
+- deploy new image to a cloud environment running on heroku
 
 
 ## Step 1: Create a new Heroku account
