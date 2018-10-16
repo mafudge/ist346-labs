@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  ssh-server:
+    build: ssh-server/.
+    hostname: ssh-server
+    privileged: true
+
+  ssh-client:
+    build: client/.
+    hostname: ssh-client
+    links:
+      - ssh-server
+    entrypoint: ["tail", "-f", "/dev/null"]
+

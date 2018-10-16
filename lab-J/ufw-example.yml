@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  nginx:
+    build: nginx/.
+    privileged: true
+    hostname: webserver
+    ports:
+      - 80:80
+    networks:
+      labJ:
+        ipv4_address: 172.44.1.102
+
+  client:
+    build: client/.
+    hostname: client
+    networks:
+      labJ:
+        ipv4_address: 172.44.1.103
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+  hacker:
+    build: client/.
+    hostname: hacker
+    networks:
+      labJ:
+        ipv4_address: 172.44.1.104
+    entrypoint: ["/bin/bash", "/usr/bin/hack.sh"]
+
+
+networks:
+  labJ:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.44.1.0/24
