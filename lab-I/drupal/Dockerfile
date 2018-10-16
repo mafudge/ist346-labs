@@ -1,8 +1,6 @@
 FROM drupal:latest
 
-RUN apt-get update
-
-RUN apt-get install -y curl nano git unzip
+RUN apt-get update && apt-get install -y curl nano git unzip
 
 RUN curl "https://getcomposer.org/installer" > composer-setup.php
 
