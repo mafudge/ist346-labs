@@ -1,11 +1,10 @@
-version: '2'
+version: '3'
 
 services:
-  mail:
+  mailserver:
     image: tvial/docker-mailserver:latest
     hostname: mail
     domainname: domain.com
-    container_name: mail
     environment:
     - ENABLE_SPAMASSASSIN=1
     - ENABLE_CLAMAV=1
@@ -21,15 +20,15 @@ services:
     image: roundcube/roundcubemail
     hostname: mailclient
     links:
-      - mail
+      - mailserver
     ports:
       - 8080:80
-    environement:
-      ROUNDCUBEMAIL_DEFAULT_HOST = mail
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=mailserver
   
   telnet:
     image: ist346/ubuntu-16.04-base:latest
     hostname: telnet
     links:
-      - mail
+      - mailserver
     entrypoint: ["tail", "-f", "/dev/null"]
