@@ -34,7 +34,7 @@ Open and new terminal and login to the server. Leave the window with the logs op
 PS C:\ist346>docker exec -it lab-j_nginx_1 bash
 ```
 
-Once logged in we need to setup a firewall to stop malicous users. UFW is already installed on most linux distrobutions.
+Once logged in we need to setup a firewall to stop malicious users. UFW is already installed on most Linux distributions.
 
 The best way to guarantee security in to stop everything then only let in what you need we do this be setting the default UFW policy to deny all traffic by default.
 
@@ -63,7 +63,7 @@ After you login lets try to *curl* the website
 ```
 root@client:/# curl -m 3 http://172.44.1.102
 ```
-Uh Oh, thats not good, it looks like our clients can't access the site either. This happened because we stopped all traffic to the server, lets fix this by first opening up port 80 this allows non https traffic to reach or server once we create the rule we need to reload the firewall.
+Uh Oh, that's not good, it looks like our clients can't access the site either. This happened because we stopped all traffic to the server, lets fix this by first opening up port 80 this allows non https traffic to reach or server once we create the rule we need to reload the firewall.
 
 
 ```
@@ -71,9 +71,9 @@ root@webserver:/# ufw allow 80
 root@webserver:/# ufw reload
 ```
 
-Now check your client agail by using curl. You should find that you can access the website again.
+Now check your client again by using curl. You should find that you can access the website again.
 
-If you check your server logs you see that the hacker is attacking agiain, lets stop that attack by blocking traffic from that IP address. If we look at the logs being created on the server you can find the IP address of the attacker.
+If you check your server logs you see that the hacker is attacking again, lets stop that attack by blocking traffic from that IP address. If we look at the logs being created on the server you can find the IP address of the attacker.
 
 ```
 172.44.1.104 - - [15/Oct/2018:14:50:34 +0000] "POST /admin HTTP/1.1" 404 153 "-" "curl/7.47.0" "-"
@@ -100,9 +100,9 @@ And now check your server logs again, and you will see the attacker has been sto
 
 One of the most used and exposed services on a server is the webserver, that is utilized at many companies. But regardless of the webserver they all need to be configured to protect against attacks.
 
-Cross-site scripting (XSS) is a type of computer security vulnerability typically found in web applications. XSS enables attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy. XSS attacks are performed by an attacker inputing a script into a form field on a website such as a comment field on a blog or forum.
+Cross-site scripting (XSS) is a type of computer security vulnerability typically found in web applications. XSS enables attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy. XSS attacks are performed by an attacker inputting a script into a form field on a website such as a comment field on a blog or forum.
 
-These types of attacks can be mitagated by the webserver, informing the client to not download resources from external sources that you do not control.
+These types of attacks can be mitigated by the webserver, informing the client to not download resources from external sources that you do not control.
 
 Get started by running docker compose, if you still have other services running stop those first.
 
@@ -110,11 +110,11 @@ Get started by running docker compose, if you still have other services running 
 PS C:\ist346>docker-compose -f .\vulnerable-website.yml up -d
 ```
 
-Two webservices are started, one in our website, the other is a server that a malicous user controls.
+Two webservices are started, one in our website, the other is a server that a malicious user controls.
 
 Open your browser and open the [demo website](http://localhost)
 
-The malicous user has comprimised your site by loading an external script in a comment box. Lets fix our webserver so these attacks do not effect our good users. We are also going to add some other security measures that help harden our webserver.
+The malicious user has compromised your site by loading an external script in a comment box. Lets fix our webserver so these attacks do not effect our good users. We are also going to add some other security measures that help harden our webserver.
 
 Open a new terminal window and login to the webserver.
 
@@ -128,7 +128,7 @@ Once logged into the server, you need to edit the nginx configuration file for t
 root@webserver:/# nano /etc/nginx/conf.d/default.conf
 ```
 
-Copy and paste the code below into you default.conf file.
+Copy and paste the code below into you `default.conf` file.
 
 
 
@@ -155,7 +155,7 @@ add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsaf
 
 ```
 
-When you are finished you default.conf file should look like the one below:
+When you are finished your `default.conf` file should look like the one below:
 ```
 server {
     listen       80;
