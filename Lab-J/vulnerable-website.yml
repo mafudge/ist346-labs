@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  badsite:
+    image: nginx
+    hostname: badsite
+    ports:
+      - 8080:80
+    volumes:
+      - ./badsite/xss.js:/usr/share/nginx/html/xss.js
+  
+      
+  webserver:
+    build: nginx/.
+    privileged: true
+    hostname: webserver
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/website:/usr/share/nginx/html
