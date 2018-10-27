@@ -1,10 +1,11 @@
-# Web and API's
+# Web API's application communication
 
 ## Goals
 
 - Use Squidex to create an API
 - Create a schema
-- Demonstrate the different apu methods
+- Create and access token.
+- Demonstrate the different api methods using curl
 
 ## Setup you environment
 
