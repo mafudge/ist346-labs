@@ -13,5 +13,5 @@
 | done | I - Cloud Computing | 15 | Using cloud identity like AuthO, Amazon EFS Compatible storage, moving a local run app to the cloud with docker hub?  |
 | done | J - Information Security | 17 | Demonstrate hardening of service ssh? http?  allow client one deny another w/Firewalls, password-less ssh? |
 | done | K - Email and Messaging | 18 | Demonstrate how an email service is configured. Setup SMTP, POP, and webmail |
-| not started | L - Web and API's | 19 | Demonstrate how to publish a web api openFaaS?  |
+| started | L - Web and API's | 19 | Demonstrate how to publish a web api openFaaS?  |
 | not started | M - Internet of Things | 21 | Demonstrate how an internet of things environment works. Configure thingsboard? and a handful of "IoT devices" which report data in real time |
