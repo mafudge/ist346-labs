@@ -12,10 +12,22 @@ services:
 
   mosquitto:
     image: mgarciap/mosquitto
+  
+  sendmail:
+    build: mail-server/.
+    environment:
+      SMTP_TO_EMAIL: YOUR_EMAIL_GOES_HERE
+      SMTP_HOST: THE_SMTP_SERVER
+      SMTP_PORT: THE_SMTP_PORT
+      SMTP_USER: THE_SMTP_USER
+      SMTP_PASSWD: THE_SMTP_PASSWD
+      SMTP_FROM_EMAIL: FROM_EMAIL
 
   nodered:
     image: mgarciap/node-red
     links:
     - mosquitto
+    - sendmail
     ports:
-    - "1880:1880" 
+    - "1880:1880"
+    
