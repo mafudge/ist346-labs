@@ -1,0 +1,33 @@
+version: '2.1'
+services:
+  squidex_mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+
+  squidex_squidex:
+    image: "squidex/squidex:dev"
+    ports:
+      - "80:80"
+    environment:
+      - URLS__BASEURL=http://localhost/
+      - URLS__ENFORCEHTTPS=false
+      - EVENTSTORE__CONSUME=true
+      - EVENTSTORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo
+      - STORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo
+      - IDENTITY__ADMINEMAIL=admin@example.com
+      - IDENTITY__ADMINPASSWORD=mySecret123!
+      - IDENTITY__GOOGLECLIENT=
+      - IDENTITY__GOOGLESECRET=
+      - IDENTITY__MICROSOFTCLIENT=
+      - IDENTITY__MICROSOFTSECRET=
+    depends_on:
+      - squidex_mongo
+    restart: unless-stopped
+
+  curl-client:
+    image: ist346/ubuntu
+    links:
+      - squidex_squidex:localhost
+    entrypoint: ["tail", "-f", "/dev/null"]
