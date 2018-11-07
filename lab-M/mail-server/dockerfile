@@ -1,0 +1,8 @@
+FROM python:3.7
+
+COPY smtp-server.py /send-mail.py
+
+EXPOSE 8000
+
+ENTRYPOINT [ "python", "/send-mail.py" ]
+
