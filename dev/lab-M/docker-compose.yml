@@ -17,10 +17,10 @@ services:
     build: mail-server/.
     environment:
       SMTP_TO_EMAIL: YOUR_EMAIL_GOES_HERE
-      SMTP_HOST: smtp.sendgrid.net
-      SMTP_PORT: 587
-      SMTP_USER: apikey
-      SMTP_PASSWD: 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
+      SMTP_HOST: YOUR_HOST
+      SMTP_PORT: YOUR_PORT
+      SMTP_USER: YOUR_USER
+      SMTP_PASSWD: YOUR_PASSWD
       SMTP_FROM_EMAIL: iot-test@syr.edu
 
   nodered:
