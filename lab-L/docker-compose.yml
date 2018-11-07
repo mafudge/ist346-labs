@@ -28,6 +28,7 @@ services:
 
   curl-client:
     image: ist346/ubuntu
+    hostname: client
     links:
       - squidex_squidex:localhost
     entrypoint: ["tail", "-f", "/dev/null"]
