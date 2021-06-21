@@ -1,7 +1,6 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
- 
-MAINTAINER  Michael Fudge <mafudge@syr.edu>
+LABEL image ist436/ubuntu
 
 # Base Setup
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -32,6 +31,6 @@ RUN apt-get install -y --no-install-recommends \
         software-properties-common \
         unzip \
         && \
-    apt-get clean 
+        apt-get clean 
 
 #RUN useradd -md /home/tommy -p IST346!

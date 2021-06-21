@@ -21,7 +21,8 @@ services:
       - 8000:8000
     volumes:
       - './3-tier/docs:/docs'
-    entrypoint: 'mkdocs serve -a 0.0.0.0:8000'
+    entrypoint: [ "bash", "-c", "while :; do echo 'Hit CTRL+C'; sleep 1; done" ]
+#'python3 -m mkdocs serve -a 0.0.0.0:8000'
     networks: 
       labF:
         ipv4_address: 172.44.1.102
