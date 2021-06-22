@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  webapp:
+#    build: flaskapp/.
+    image: ist346/flaskapp:latest
+    environment:
+      - SERVICE_PORTS=8080
+    networks:
+      - lab_g
+
+  nginx:
+      image: nginx:stable
+      volumes: 
+        - ./nginx/roundrobin.conf:/etc/nginx/nginx.conf
+      restart: always
+      ports:
+        - "80:80"
+      depends_on:
+        - webapp
+      links: 
+        - webapp 
+      networks:
+        - lab_g      
+
+networks:
+  lab_g:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.7.0/24
+
+
