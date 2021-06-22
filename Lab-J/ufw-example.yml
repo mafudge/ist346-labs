@@ -3,37 +3,42 @@ version: '3'
 services:
 
   webserver:
-    build: nginx/.
+    image: ist346/nginxfw:latest
     privileged: true
     hostname: webserver
     ports:
       - 80:80
+    volumes:
+      - ./nginx/website:/usr/share/nginx/html
     networks:
-      labJ:
-        ipv4_address: 172.44.1.102
+      lab_j:
+        ipv4_address: 172.44.10.102
 
   client:
-    build: client/.
+    image: ist346/hacker:latest
     hostname: client
     networks:
-      labJ:
-        ipv4_address: 172.44.1.103
+      lab_j:
+        ipv4_address: 172.44.10.103
     entrypoint: ["tail", "-f", "/dev/null"]
 
   hacker:
-    image: ist346/labjhacker
-    #build: client/.
+    image: ist346/hacker:latest
     hostname: hacker
+    depends_on:
+      - webserver
+    links:
+      - webserver
     networks:
-      labJ:
-        ipv4_address: 172.44.1.104
+      lab_j:
+        ipv4_address: 172.44.10.104
     entrypoint: ["/bin/bash", "/usr/bin/hack.sh"]
 
 
 networks:
-  labJ:
+  lab_j:
     driver: bridge
     ipam:
       driver: default
       config:
-      - subnet: 172.44.1.0/24
+      - subnet: 172.44.10.0/24

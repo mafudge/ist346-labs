@@ -1,5 +1,4 @@
-FROM nginx
+#FROM ist346/server:latest
+FROM nginx:stable 
 
-RUN apt-get update
-RUN apt-get install -y nano ufw
-
+RUN apt-get update && apt-get install -y ufw nano 

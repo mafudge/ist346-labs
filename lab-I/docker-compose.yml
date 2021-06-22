@@ -1,9 +1,9 @@
 version: '3.1'
 
 services:
-# drupal
   drupal:
-    build: drupal/.
+    image: ist346/drupal:latest 
+#    build: drupal/.
     restart: always
     ports:
       - 8080:80
