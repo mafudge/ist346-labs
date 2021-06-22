@@ -3,6 +3,8 @@ version: "3"
 services:
   iotsensorsimultor:
     image: mgarciap/iot-sensor-simulator
+    depends_on: 
+      - mosquitto
     links:
     - mosquitto
     environment:
@@ -11,20 +13,20 @@ services:
     - "9393:9393"  
 
   mosquitto:
-    image: mgarciap/mosquitto
+    image: eclipse-mosquitto:1.5
   
   sendmail:
     build: mail-server/.
     environment:
-      SMTP_TO_EMAIL: YOUR_EMAIL_GOES_HERE
-      SMTP_HOST: smtp.sendgrid.net
-      SMTP_PORT: 587
-      SMTP_USER: apikey
-      SMTP_PASSWD: FROM_LAB_DOC
-      SMTP_FROM_EMAIL: iot-test@syr.edu
+      SMTP_TO_EMAIL: mafudge@gmail.com 
+    ports:
+      - "8000:8000"
 
   nodered:
     image: mgarciap/node-red
+    depends_on: 
+      - sendmail
+      - mosquitto
     links:
     - mosquitto
     - sendmail

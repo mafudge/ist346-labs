@@ -1,34 +1,53 @@
-version: '2.1'
+version: '2.3'
 services:
-  squidex_mongo:
-    image: mongo:latest
+  squidex_mongodb:
+    image: mongo:4.4
     ports:
       - "27017:27017"
     restart: unless-stopped
+    networks:
+      - lab_l
 
-  squidex_squidex:
-    image: "squidex/squidex:dev"
+  squidex_server:
+    image: "squidex/squidex:4.0.3"
+    hostname: localhost 
     ports:
       - "80:80"
+    networks:
+      - lab_l
     environment:
-      - URLS__BASEURL=http://localhost/
-      - URLS__ENFORCEHTTPS=false
-      - EVENTSTORE__CONSUME=true
-      - EVENTSTORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo
-      - STORE__MONGODB__CONFIGURATION=mongodb://squidex_mongo
-      - IDENTITY__ADMINEMAIL=admin@example.com
-      - IDENTITY__ADMINPASSWORD=mySecret123!
-      - IDENTITY__GOOGLECLIENT=
-      - IDENTITY__GOOGLESECRET=
-      - IDENTITY__MICROSOFTCLIENT=
-      - IDENTITY__MICROSOFTSECRET=
+      SQUIDEX_DOMAIN: localhost
+      SQUIDEX_ADMINEMAIL: admin@example.com
+      SQUIDEX_ADMINPASSWORD: MySquid123?
+      SQUIDEX_FORCE_HTTPS: "false"
+      SQUIDEX_PROTOCOL: http
+      URLS__BASEURL: http://localhost
+      EVENTSTORE__TYPE: MongoDB
+      EVENTSTORE__MONGODB__CONFIGURATION: mongodb://squidex_mongodb
+      STORE__MONGODB__CONFIGURATION: mongodb://squidex_mongodb
+      IDENTITY__ADMINEMAIL: admin@example.com
+      IDENTITY__ADMINPASSWORD: MySquid123?
+
     depends_on:
-      - squidex_mongo
+      - squidex_mongodb
+    links:
+      - squidex_mongodb
     restart: unless-stopped
 
-  curl-client:
-    image: ist346/ubuntu
+  client:
+    image: ist346/ubuntu:latest
     hostname: client
     links:
-      - squidex_squidex:localhost
+      - squidex_server
     entrypoint: ["tail", "-f", "/dev/null"]
+
+
+networks:
+  lab_l:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.12.0/24
