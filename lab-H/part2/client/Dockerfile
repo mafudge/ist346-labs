@@ -1,6 +1,6 @@
-FROM ubuntu:16.04
+FROM ist346/ubuntu:latest
 
-RUN apt-get -y update
+#RUN apt-get -y update
 
 # Install requirements, cifs utils allows us to mount the folder.
 RUN apt-get install -y smbclient nano cifs-utils

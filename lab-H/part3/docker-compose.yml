@@ -2,9 +2,9 @@ version: "3"
 
 # minio 
 services:
-  minio:
-    image: minio/minio
-    hostname: server
+  minioserver:
+    image: minio/minio:latest
+    hostname: minioserver
 #    volumes:
 #      - ./data:/data
     ports:
@@ -14,26 +14,25 @@ services:
       MINIO_SECRET_KEY: minio123
     command: "server /data"
     networks: 
-      labH:
-        ipv4_address: 172.144.1.254
+      lab_h:
+        ipv4_address: 172.144.8.254
   client:
-    image: minio/mc:edge
+    image: minio/mc:latest
     hostname: client
     links: 
-      - minio 
-    entrypoint:
-      - /bin/sh
+      - minioserver 
+    entrypoint: ['tail', '-f', '/dev/null' ]
     volumes:
       - ./files:/files
     networks: 
-      labH:
-        ipv4_address: 172.144.1.253
+      lab_h:
+        ipv4_address: 172.144.8.253
 networks:
-  labH:
+  lab_h:
     driver: bridge
     #enable_ipv6: true 
     ipam:
       driver: default
       config:
       -
-        subnet: 172.144.1.0/24
+        subnet: 172.144.8.0/24
