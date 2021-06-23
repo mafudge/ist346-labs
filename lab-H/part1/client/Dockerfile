@@ -1,6 +1,5 @@
-FROM ubuntu:16.04
+FROM ist346/ubuntu:latest
 
-RUN apt-get -y update
 
 # comments
 # Install requirements, cifs utils allows us to mount the folder

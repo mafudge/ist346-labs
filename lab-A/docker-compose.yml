@@ -1,7 +1,7 @@
 version: '2'
 services:
   ubuntu:
-    image: ist346/ubuntu
+    image: ist346/ubuntu:latest
     command: /bin/bash 
     hostname: ubuntu
     privileged: true

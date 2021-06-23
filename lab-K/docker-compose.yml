@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mailserver:
-    image: tvial/docker-mailserver:latest
+    image: tvial/docker-mailserver:stable
     hostname: mail.mycompany.com
     volumes:
       - ./config/:/tmp/docker-mailserver/
@@ -19,8 +19,8 @@ services:
       - SYS_PTRACE
 
   roundcube:
-    image: roundcube/roundcubemail
-    hostname: mailclient
+    image: roundcube/roundcubemail:latest
+    hostname: webmail.mycompany.com 
     links:
       - mailserver
     ports:
@@ -31,9 +31,9 @@ services:
       - ROUNDCUBEMAIL_SMTP_SERVER=mailserver
       - ROUNDCUBEMAIL_SMTP_PORT=25
   
-  telnet:
-    image: ist346/ubuntu-16.04-base:latest
-    hostname: telnet
+  workstation:
+    image: ist346/workstation:latest
+    hostname: workstation
     links:
       - mailserver
     entrypoint: ["tail", "-f", "/dev/null"]

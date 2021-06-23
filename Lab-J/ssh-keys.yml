@@ -3,14 +3,15 @@ version: '3'
 services:
 
   ssh-server:
-    image: ist346/ssh_server
-    #build: ssh-server/.
+    image: ist346/server:latest
     hostname: ssh-server
     privileged: true
 
   ssh-client:
-    build: client/.
+    image: ist346/workstation:latest 
     hostname: ssh-client
+    depends_on:
+      - ssh-server
     links:
       - ssh-server
     entrypoint: ["tail", "-f", "/dev/null"]

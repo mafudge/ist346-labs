@@ -2,20 +2,20 @@ version: '3'
 services:
   server:
 #    build: ansible-server/.
-    image: "ist346/ansible-server:latest"
+    image: ist346/ansible-server:latest
     hostname: server
     privileged: true
 #    stdin_open: true
 #    tty: true    
     networks: 
-      labE:
-        ipv4_address: 172.44.1.254
+      lab_e:
+        ipv4_address: 172.44.5.254
     ports:
       - "22:22" # SSH
       - "80:80"
   workstation:
 #    build: ansible-workstations/.
-    image: "ist346/ansible-client:latest"
+    image: ist346/ansible-workstation:latest
     hostname: workstation    
     privileged: true
 #    stdin_open: true
@@ -23,15 +23,15 @@ services:
     links:
       - server
     networks: 
-      - labE
+      - lab_e
 #    entrypoint: /bin/bash
     
 networks:
-  labE:
+  lab_e:
     driver: bridge
     #enable_ipv6: true 
     ipam:
       driver: default
       config:
       -
-        subnet: 172.44.1.0/24
+        subnet: 172.44.5.0/24

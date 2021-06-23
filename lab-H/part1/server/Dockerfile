@@ -1,7 +1,6 @@
-FROM ubuntu:16.04
+FROM ist346/ubuntu:latest
 
-RUN apt-get -y update
-RUN apt-get install -y samba nano
+RUN apt-get install -y samba 
 
 # Comments
 # RUN useradd ist-t-user --shell /bin/false

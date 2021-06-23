@@ -1,37 +1,42 @@
 version: '3'
 
 services:
-  nginx3:
-#    image: jwilder/nginx-proxy
-    build: ./3-tier/nginx/.
+  nginx:
+    image: nginx:stable
+    volumes: 
+      - ./3-tier/nginx/nginx.conf:/etc/nginx/nginx.conf
     restart: always
     ports:
       - "80:80"
+    depends_on:
+      - mkdocs
     links: 
       - mkdocs 
     networks: 
-      labF:
-        ipv4_address: 172.44.1.101
+      lab_f:
+        ipv4_address: 172.44.6.101
 
   mkdocs:
-    build: ./3-tier/mkdocs/.
+    #build: ./3-tier/mkdocs/.
+    image: ist346/mkdocs:latest
     restart: always
     hostname: mkdocs
     ports:
       - 8000:8000
     volumes:
       - './3-tier/docs:/docs'
-    entrypoint: 'mkdocs serve -a 0.0.0.0:8000'
+    entrypoint: ["python3", "-m","mkdocs", "serve", "-a", "0.0.0.0:8000" ] 
+    # [ "bash", "-c", "while :; do echo 'Hit CTRL+C'; sleep 1; done" ]
     networks: 
-      labF:
-        ipv4_address: 172.44.1.102
+      lab_f:
+        ipv4_address: 172.44.6.102
 
 networks:
-  labF:
+  lab_f:
     driver: bridge
     #enable_ipv6: true 
     ipam:
       driver: default
       config:
       -
-        subnet: 172.44.1.0/24
+        subnet: 172.44.6.0/24

@@ -1,42 +1,76 @@
 version: '3.1'
 
 services:
-  ldap-host:
+  ldapserver:
     # openldap
     # https://github.com/osixia/docker-openldap
     # un: cn=admin,dc=example,dc=org
     # pw: admin
-    image: osixia/openldap:1.2.2
+    restart: always
+    image: osixia/openldap:1.5.0
+    hostname: ldapserver
     environment:
-      - LDAP_TLS=false
-    
-  ldap-ui:
-    image: osixia/phpldapadmin:0.7.2
+      LDAP_TLS: "false"
+      LDAP_ORGANISATION: Example Org
+      LDAP_DOMAIN: example.org
+      LDAP_ADMIN_PASSWORD: admin 
+      LDAP_BASE_DN: dc=example,dc=org
+    networks: 
+      lab_h:
+        ipv4_address: 172.44.8.101
+      
+  ldapui:
+    image: osixia/phpldapadmin:0.9.0
+    restart: always 
+    depends_on: 
+      - ldapserver
     links:
-      - ldap-host
+      - ldapserver
     environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=ldap-host
-      - PHPLDAPADMIN_HTTPS=false
+      PHPLDAPADMIN_LDAP_HOSTS: ldapserver
+      PHPLDAPADMIN_HTTPS: "false"
     ports:
       - 9080:80
-
+    networks: 
+      lab_h:
+  
   smbserver:
-    image: andrespp/samba-ldap
+    image: ist346/smbldap:latest 
+#    image:  andrespp/samba-ldap:jessie
+    restart: always
     environment:
-     - SAMBA_LDAP_PASSWORD=admin
+      - SAMBA_LDAP_PASSWORD=admin
     hostname: smbserver
+    depends_on: 
+      - ldapserver
     links:
-     - ldap-host
+      - ldapserver
     ports:
-     - "8445:445"
+      - "8445:445"
     volumes:
-     - ./libnss-ldap.conf:/etc/libnss-ldap.conf:ro
-     - ./smb.conf:/etc/samba/smb.conf:ro
-     - ./shares:/mnt/homes
+      - ./libnss-ldap.conf:/etc/libnss-ldap.conf:ro
+      - ./smb.conf:/etc/samba/smb.conf:ro
+      - ./shares:/mnt/homes
+    networks: 
+      lab_h:
+        ipv4_address: 172.44.8.102
 
   client:
-    build: ./client
+    image: ist346/smbclient:latest
     hostname: client
     privileged: true # Need to add privileged mode so mount 
     links:
       - smbserver
+      - ldapserver
+    networks: 
+      lab_h:
+      
+networks:
+  lab_h:
+    driver: bridge
+    #enable_ipv6: true 
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.44.8.0/24

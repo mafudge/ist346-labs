@@ -3,7 +3,7 @@ version: '3'
 services:
 
   badsite:
-    image: nginx
+    image: nginx:stable
     hostname: badsite
     ports:
       - 8080:80
@@ -12,7 +12,8 @@ services:
   
       
   webserver:
-    build: nginx/.
+#    build: nginx/.
+    image: ist346/nginxfw:latest 
     privileged: true
     hostname: webserver
     ports:

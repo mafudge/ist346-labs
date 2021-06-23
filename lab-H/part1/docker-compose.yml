@@ -1,12 +1,14 @@
-version: "2.2"
+version: "3.1"
 
 services:
   server:
-    build: server/.
+    image: ist346/smbserver:latest
+#    build: server/.
     hostname: server
   
   client:
-    build: client/.
+    image: ist346/smbclient:latest 
+#    build: client/.
     privileged: true # Need to add privileged mode so mount works!!!
     hostname: client
     links:

@@ -1,39 +1,22 @@
 from http.server import *
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 import os
 import sys
+import yagmail
 
-SMTP_HOST = os.environ.get("SMTP_HOST", None)
-SMTP_PORT = os.environ.get("SMTP_PORT", None)
-SMTP_USER = os.environ.get("SMTP_USER", None)
-SMTP_PASSWD = os.environ.get("SMTP_PASSWD", None)
-SMTP_FROM_EMAIL = os.environ.get("SMTP_FROM_EMAIL", None)
+APP_PW = "lmlovnpixsfcyoip"
+FROM_USER = "mafudge@g.syr.edu"
 SMTP_TO_EMAIL = os.environ.get("SMTP_TO_EMAIL", None)
 
 def send_alert():
-    sender = SMTP_FROM_EMAIL
-    receivers = [SMTP_TO_EMAIL]
 
-    msg = MIMEMultipart()
-
-    msg['From'] = SMTP_FROM_EMAIL
-    msg['To'] = SMTP_TO_EMAIL
-    msg['Subject'] = "Someone is Thirsty!!"
-
-    message = "Your need to fill up their beer!"
-
-    msg.attach(MIMEText(message, 'plain'))
-
-    try:
-        smtpObj = smtplib.SMTP(host=SMTP_HOST, port=SMTP_PORT)
-        smtpObj.login(SMTP_USER, SMTP_PASSWD)
-        smtpObj.sendmail(sender, receivers, msg.as_string())         
-        print("Successfully sent email")
-        smtpObj.close()
-    except smtplib.SMTPException as err:
-        print("Error: unable to send email" + err)
+    with yagmail.SMTP(FROM_USER, APP_PW, host="smtp.gmail.com") as yag:
+        subject = "IST346 IoT Alert: Empty Glass Condition!"
+        content = ["The pint glass is empty.", "Time for a refill!"] 
+        try:
+            yag.send(SMTP_TO_EMAIL, subject, content)
+            print("Successfully sent email")
+        except Exception as e:
+            print(f"Error: unable to send email ERROR {e}")
 
 class MyServer(BaseHTTPRequestHandler):
 
