@@ -18,9 +18,9 @@ services:
   sendmail:
     build: mail-server/.
     environment:
-      SMTP_TO_EMAIL: mafudge@gmail.com 
-    ports:
-      - "8000:8000"
+      SMTP_TO_EMAIL: YOUR_EMAIL_GOES_HERE 
+#    ports:
+#      - "8000:8000"
 
   nodered:
     image: mgarciap/node-red

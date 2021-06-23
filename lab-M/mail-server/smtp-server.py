@@ -16,7 +16,7 @@ def send_alert():
             yag.send(SMTP_TO_EMAIL, subject, content)
             print("Successfully sent email")
         except Exception as e:
-            print("Error: unable to send email" + e)
+            print(f"Error: unable to send email ERROR {e}")
 
 class MyServer(BaseHTTPRequestHandler):
 
